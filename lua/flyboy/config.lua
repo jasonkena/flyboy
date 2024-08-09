@@ -65,6 +65,7 @@ local templates = {
 local defaults = {
     templates = templates,
     sources = sources,
+    log_path = vim.fn.stdpath("data") .. "/flyboy_logs",
     model = "gpt-3.5-turbo",
     temperature = 1,
     url = "https://api.openai.com/v1/chat/completions",

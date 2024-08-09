@@ -2,13 +2,19 @@ local openai = require('flyboy.openai')
 local config = require('flyboy.config')
 
 local function open_chat_with_text(text)
-    -- create a new empty buffer
+    local timestamp = os.date("%Y-%m-%d-%H-%M-%S")
+
+    local log_path = config.options.log_path
+    local file_path = string.format("%s/%s.md", log_path, timestamp)
+
     local buffer = vim.api.nvim_create_buf(true, false)
     vim.api.nvim_buf_set_option(buffer, "filetype", "markdown")
-    local lines = vim.split(text, "\n")
+    vim.api.nvim_buf_set_name(buffer, file_path)
 
+    local lines = vim.split(text, "\n")
     table.insert(lines, "")
     vim.api.nvim_buf_set_lines(buffer, 0, -1, true, lines)
+
     return buffer
 end
 
