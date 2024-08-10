@@ -17,7 +17,12 @@ local function get_chatgpt_completion(options, messages, on_delta, on_complete)
                     if raw_message == "[DONE]" then
                         on_complete()
                     elseif (string.len(data) > 6) then
-                        on_delta(vim.fn.json_decode(string.sub(data, 6)))
+                        local status, result = pcall(vim.fn.json_decode, string.sub(data, 6))
+                        if status then
+                            on_delta(result)
+                        else
+                            print("Error decoding JSON:", result, data)
+                        end
                     end
                 end)
         })
