@@ -72,7 +72,8 @@ local defaults = {
     headers = {
         Authorization = "Bearer " .. (vim.env.OPENAI_API_KEY or ""),
         Content_Type = "application/json"
-    }
+    },
+    roles = {"user", "assistant", "system"},
 }
 
 M.options = {}

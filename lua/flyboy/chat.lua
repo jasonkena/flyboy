@@ -56,13 +56,13 @@ local function parseMarkdown()
     local buffer = vim.api.nvim_get_current_buf()
     local lines = vim.api.nvim_buf_get_lines(buffer, 0, -1, false)
     for _, line in ipairs(lines) do
-        if line:match("^#%s+(.*)$") then
-            local role = line:match("^#%s+(.*)$")
+        local role = line:match("^#%s+(.*)$")
+        if role and table.concat(config.options.roles, "|"):lower():match(role:lower()) then
             if (currentEntry) then
                 table.insert(messages, currentEntry)
             end
             currentEntry = {
-                role = string.lower(role),
+                role = role:lower(),
                 content = ""
             }
         elseif currentEntry then
