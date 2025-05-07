@@ -13,6 +13,9 @@ local function get_chatgpt_completion(options, messages, on_delta, on_complete)
                 }),
             stream = vim.schedule_wrap(
                 function(_, data, _)
+                    if data == nil then
+                        return
+                    end
                     local raw_message = string.gsub(data, "^data: ", "")
                     if raw_message == "[DONE]" then
                         on_complete()
